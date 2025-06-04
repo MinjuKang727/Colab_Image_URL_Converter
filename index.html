@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy image URL for Colab</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            let fieldCount = 1;
+            $(".url_btn").click(function() {
+                let url = $('.shared_url').val();
+                console.log(url);
+                let start = url.indexOf("/d/");
+                let end = url.indexOf("/view?");
+
+                $(".shared_url").val("");
+                if (start == -1 || end == -1) {
+                    $(".result_url").val();
+                    $(".result").css("display", "none");
+                    alert("URL이 유효하지 않습니다.");
+                } else {
+                    url = "https://drive.google.com/uc?export=view&id=" + url.slice(start + 3, end);
+                    $(".result_url").val(url);
+                    $(".result").css("display", "block");
+                }
+                
+            });
+
+            $('.copy_btn').click(function() {//클릭 이벤트
+                $('.result_url').select(); 
+                try { 
+                    const copy_successful = document.execCommand('copy');
+                    alert("클립보드에 복사되었습니다"); 
+                } catch (err) { 
+                    alert('이 브라우저는 지원하지 않습니다. 크롬을 사용해 주세요.');
+                } 
+            });
+        });
+    </script>
+</head>
+<body style="text-align: center;">
+    <h1>To convert Google Drive image URL</h1>
+    <div style="margin: 10px auto;">
+    <p>구글 코랩에서 텍스트 작성시, 이미지를 넣을 때 base64로 이미지를 넣게 되면 엄청나게 긴 문자열로 변환되어 너무 불편해서 만든 페이지입니다.</p>
+    
+    <b style="text-align: left;">사용 방법</b>
+    <div style="text-align:left; width: fit-content; margin: 5px auto;">1. 코랩 텍스트에 올릴 이미지를 구글 드라이브에 업로드<br>
+        2. 구글 드라이브에 업로드된 이미지의 엑세스 권한을 "링크가 있는 모든 사용자"로 변경<br>
+        3. 업로드할 이미지의 공유 링크를 복사<br>
+        4. 아래의 input박스에 붙여넣기</div>
+    </div>
+    <br>
+    <div style="text-align: center;">
+        <input class="shared_url" type="text" style="width:500px;"> &nbsp; <input class="url_btn" type="button" value="변환하기"><br><br>
+        <div class="result" style="display:none;">
+            <input class="result_url" type="text" style="width:500px;;" disabled> &nbsp; <input class="copy_btn" type="button" value="복사하기">
+        </div>
+    </div>
+</body>
+</html>
