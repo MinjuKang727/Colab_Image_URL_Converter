@@ -1,1 +1,1 @@
-# Minjukang727.github.io
+# Copy Image URL for Colab
