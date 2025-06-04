@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copy image URL for Colab</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
     <script>
         $(document).ready(function() {
             let fieldCount = 1;
@@ -28,10 +29,10 @@
             });
 
             $('.copy_btn').click(function() {//클릭 이벤트
-                $('.result_url').select(); 
+                navigator.clipboard.writeText($(".result_url").val());
+                console.log(navigator.clipboard.readText());
                 try { 
-                    const copy_successful = document.execCommand('copy');
-                    alert("클립보드에 복사되었습니다"); 
+                    alert("클립보드에 복사되었습니다."); 
                 } catch (err) { 
                     alert('이 브라우저는 지원하지 않습니다. 크롬을 사용해 주세요.');
                 } 
@@ -54,7 +55,7 @@
     <div style="text-align: center;">
         <input class="shared_url" type="text" style="width:500px;"> &nbsp; <input class="url_btn" type="button" value="변환하기"><br><br>
         <div class="result" style="display:none;">
-            <input class="result_url" type="text" style="width:500px;;" disabled> &nbsp; <input class="copy_btn" type="button" value="복사하기">
+            <input class="result_url" type="text" style="width:500px;" disabled> &nbsp; <input class="copy_btn" type="button" value="복사하기">
         </div>
     </div>
 </body>
